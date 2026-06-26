@@ -1,0 +1,98 @@
+.lichess-panel {
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid #2a2a40;
+}
+
+.lichess-panel__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lichess-panel__avatar {
+  font-size: 1.5rem;
+}
+
+.lichess-panel__username {
+  font-weight: 700;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.lichess-panel__rating {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.lichess-panel__vs {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.lichess-panel__color {
+  font-size: 0.8rem;
+  color: #b58863;
+  margin-top: 4px;
+}
+
+.lichess-panel__game {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lichess-panel__seek {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.btn--preset {
+  background: #252535;
+  color: #ccc;
+  border: 1px solid #333;
+  font-size: 0.85rem;
+  padding: 6px;
+}
+
+.btn--preset:hover { background: #303050; }
+.btn--preset-active { border-color: #b58863; color: #e0c090; }
+
+.btn--primary {
+  background: #b58863;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.btn--primary:hover { background: #c99a75; }
+.btn--primary:disabled { background: #5a4a3a; color: #888; cursor: default; }
+
+.btn--danger {
+  background: #6b2020;
+  color: #ffaaaa;
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+.btn--danger:hover { background: #8b2828; }
+
+.lichess-panel__error {
+  font-size: 0.75rem;
+  color: #ff8888;
+  margin: 0;
+  line-height: 1.4;
+}

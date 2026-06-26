@@ -1,0 +1,181 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: #12121f;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: #0d0d1a;
+  border-bottom: 1px solid #2a2a40;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.app__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lichess-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #b58863;
+  font-weight: 600;
+}
+
+.btn--sm { padding: 4px 10px; font-size: 0.8rem; }
+
+.app__header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app__mode-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #b58863;
+  letter-spacing: 0.03em;
+}
+
+.bot-thinking {
+  font-size: 1rem;
+  animation: pulse 1s infinite;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #333;
+}
+
+.btn--ghost:hover {
+  background: #1e1e2e;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+.btn--danger {
+  color: #e05050 !important;
+  border-color: #5a2020 !important;
+}
+
+.btn--danger:hover {
+  background: rgba(200, 50, 50, 0.15) !important;
+  border-color: #e05050 !important;
+}
+
+.app__main {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  flex: 1;
+}
+
+.game-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.game-panel__player-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.game-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.game-panel__board-row {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.game-panel__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 220px;
+  min-width: 180px;
+  padding-top: 4px;
+}
+
+.analysis-progress {
+  position: relative;
+  height: 24px;
+  background: #1a1a2e;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.analysis-progress__bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: #b58863;
+  opacity: 0.3;
+  transition: width 0.3s;
+}
+
+.result-banner {
+  background: #b58863;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+  .app__main {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 560px;
+  }
+}

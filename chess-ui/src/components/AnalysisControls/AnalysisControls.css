@@ -1,0 +1,65 @@
+.analysis-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #2a2a40;
+}
+
+.analysis-nav {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.nav-btn {
+  background: #252535;
+  border: 1px solid #333;
+  color: #ccc;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex: 1;
+}
+
+.nav-btn:hover:not(:disabled) { background: #333348; color: #fff; }
+.nav-btn:disabled { opacity: 0.35; cursor: default; }
+
+.analysis-import { display: flex; flex-direction: column; gap: 6px; }
+
+.import-tabs { display: flex; gap: 4px; }
+
+.import-tab {
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: #252535;
+  color: #888;
+  cursor: pointer;
+}
+
+.import-tab--active { border-color: #b58863; color: #e0c090; background: #2a2a3e; }
+
+.import-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #12121f;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ccc;
+  font-size: 0.75rem;
+  font-family: monospace;
+  padding: 8px;
+  resize: vertical;
+}
+
+.import-textarea:focus { outline: none; border-color: #555; }
+
+.import-error { color: #ff8888; font-size: 0.75rem; margin: 0; }
+
+.import-btn { font-size: 0.85rem; padding: 8px; }

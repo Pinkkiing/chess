@@ -1,0 +1,30 @@
+# Lichess source (référence externe, non versionné)
+lila/
+
+# Claude Code (config locale)
+.claude/
+
+# Dépendances & build
+chess-ui/node_modules/
+chess-ui/dist/
+chess-ui/dist-ssr/
+
+# Variables d'environnement locales
+chess-ui/.env
+chess-ui/*.local
+
+# Binaires Stockfish (copiés depuis node_modules, ~7 Mo)
+chess-ui/public/stockfish.js
+chess-ui/public/stockfish.wasm
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.idea/
+*.sw?

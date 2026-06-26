@@ -1,0 +1,10 @@
+.eval-chart {
+  background: #0f0f1a;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #2a2a40;
+}
+
+.eval-chart svg {
+  display: block;
+}

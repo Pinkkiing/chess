@@ -1,0 +1,55 @@
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #1e1e2e;
+  transition: background 0.2s;
+}
+
+.player-info--active {
+  background: #2a2a3e;
+}
+
+.player-info__piece {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  flex-shrink: 0;
+}
+
+.player-info__piece--white {
+  background: #f0d9b5;
+  border-color: #b58863;
+}
+
+.player-info__piece--black {
+  background: #2a2a2a;
+  border-color: #888;
+}
+
+.player-info__details {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.player-info__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f0a500;
+  text-transform: uppercase;
+}
+
+.player-info__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.player-info__rating {
+  font-size: 0.85rem;
+  color: #888;
+}
