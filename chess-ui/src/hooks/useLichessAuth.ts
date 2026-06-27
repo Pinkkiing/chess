@@ -6,10 +6,18 @@ const REDIRECT_URI = `${window.location.origin}${window.location.pathname}`;
 const LICHESS_OAUTH = 'https://lichess.org/oauth';
 const LICHESS_TOKEN = 'https://lichess.org/api/token';
 
+export interface LichessRatings {
+  bullet?:    number;
+  blitz?:     number;
+  rapid?:     number;
+  classical?: number;
+}
+
 export interface LichessUser {
   id: string;
   username: string;
   rating?: number;
+  ratings: LichessRatings;
 }
 
 export function useLichessAuth() {
@@ -43,10 +51,17 @@ export function useLichessAuth() {
     if (!token) { setUser(null); return; }
     fetchAccount(token)
       .then(data => {
+        const p = data.perfs ?? {};
         setUser({
           id: data.id,
           username: data.username,
-          rating: data.perfs?.blitz?.rating ?? data.perfs?.rapid?.rating,
+          rating: p.blitz?.rating ?? p.rapid?.rating,
+          ratings: {
+            bullet:    p.bullet?.rating,
+            blitz:     p.blitz?.rating,
+            rapid:     p.rapid?.rating,
+            classical: p.classical?.rating,
+          },
         });
       })
       .catch(() => logout());

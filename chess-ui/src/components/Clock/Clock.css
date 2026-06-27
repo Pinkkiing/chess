@@ -2,42 +2,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
-  border-radius: 8px;
-  background: var(--clock-bg, #1e1e2e);
+  padding: 10px var(--space-5);
+  border-radius: var(--r-md);
+  background: var(--surface);
   border: 2px solid transparent;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
   min-width: 110px;
 }
 
 .clock--active {
-  border-color: var(--accent, #b58863);
-  background: var(--clock-active-bg, #2a2a3e);
+  border-color: var(--accent);
+  background: var(--surface-2);
+  box-shadow: var(--glow-accent);
 }
 
 .clock__time {
+  font-family: var(--font-mono);
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.05em;
-  color: #e0e0e0;
+  letter-spacing: 0.04em;
+  color: var(--text);
 }
 
-.clock--low .clock__time {
-  color: #e05c5c;
-}
+.clock--low .clock__time { color: var(--c-danger); }
 
 .clock__time--inf {
   font-size: 1.5rem;
-  color: #666;
+  color: var(--text-faint);
 }
 
 .clock--low.clock--active {
-  border-color: #e05c5c;
-  animation: pulse 1s infinite;
+  border-color: var(--c-danger);
+  box-shadow: 0 0 0 3px var(--c-danger-soft);
+  animation: pulse-clock 1s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulse-clock {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  50%       { opacity: 0.7; }
 }

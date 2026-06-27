@@ -1,58 +1,33 @@
-/* Board color themes via CSS custom properties */
-:root {
-  --board-light: #f0d9b5;
-  --board-dark: #b58863;
-  --board-last-move: rgba(235, 185, 50, 0.55);
-  --board-selected: rgba(20, 85, 30, 0.5);
-  --board-move-dest: rgba(20, 85, 30, 0.5);
-  --board-check: rgba(169, 0, 0, 0.82);
-}
+/* Board color themes — vars picked up by chessground overrides below */
+/* Default purple board comes from ds-tokens.css (:root --board-* vars) */
 
-/* Override chessground board with our theme vars */
+/* ── Chessground overrides ──────────────────────────────── */
 cg-board {
   background-color: var(--board-dark) !important;
   background-image: repeating-conic-gradient(
     var(--board-light) 0% 25%,
-    var(--board-dark) 0% 50%
+    var(--board-dark)  0% 50%
   ) !important;
   background-size: 25% 25% !important;
 }
 
-/* ─── Interactive square highlights ──────────────── */
-cg-board square.last-move {
-  background-color: var(--board-last-move);
-}
-
-cg-board square.selected {
-  background-color: var(--board-selected);
-}
-
-cg-board square.move-dest {
-  background: radial-gradient(var(--board-move-dest) 22%, #208530 0, rgba(0,0,0,0.3) 0, rgba(0,0,0,0) 0);
-}
-
-cg-board square.oc.move-dest {
-  background: radial-gradient(transparent 0%, transparent 80%, var(--board-move-dest) 80%);
-}
-
+cg-board square.last-move        { background-color: var(--board-last); }
+cg-board square.selected         { background-color: var(--board-sel); }
+cg-board square.move-dest        { background: radial-gradient(var(--board-sel) 22%, #208530 0, rgba(0,0,0,0.3) 0, rgba(0,0,0,0) 0); }
+cg-board square.oc.move-dest     { background: radial-gradient(transparent 0%, transparent 80%, var(--board-sel) 80%); }
 cg-board square.move-dest:hover,
-cg-board square.move-dest.hover {
-  background: var(--board-selected);
-}
-
+cg-board square.move-dest.hover  { background: var(--board-sel); }
 cg-board square.check {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(231, 0, 0, 1) 25%,
-    rgba(169, 0, 0, 0) 89%,
-    rgba(158, 0, 0, 0) 100%
+  background: radial-gradient(ellipse at center,
+    rgba(255,0,0,1) 0%, rgba(231,0,0,1) 25%,
+    rgba(169,0,0,0) 89%, rgba(158,0,0,0) 100%
   );
 }
 
-/* ─── Themes ─────────────────────────────────────── */
-.theme-brown  { --board-light: #f0d9b5; --board-dark: #b58863; }
-.theme-blue   { --board-light: #dee3e6; --board-dark: #8ca2ad; --board-move-dest: rgba(20,50,120,0.5); --board-selected: rgba(20,50,120,0.5); }
-.theme-green  { --board-light: #ffffdd; --board-dark: #86a666; }
-.theme-purple { --board-light: #e8d8f0; --board-dark: #8855aa; --board-move-dest: rgba(80,20,120,0.5); --board-selected: rgba(80,20,120,0.5); }
-.theme-night  { --board-light: #b0b4b8; --board-dark: #4a4f54; }
+/* ── Named themes ───────────────────────────────────────── */
+/* (DS default = purple; theme classes override) */
+.theme-brown  { --board-light: #f0d9b5; --board-dark: #b58863; --board-last: rgba(235,185,50,0.55); --board-sel: rgba(20,85,30,0.5); }
+.theme-blue   { --board-light: #dee3e6; --board-dark: #8ca2ad; --board-last: rgba(20,50,120,0.4);   --board-sel: rgba(20,50,120,0.5); }
+.theme-green  { --board-light: #ffffdd; --board-dark: #86a666; --board-last: rgba(235,185,50,0.55); --board-sel: rgba(20,85,30,0.5); }
+.theme-purple { --board-light: #e8d8f0; --board-dark: #8855aa; --board-last: rgba(196,133,232,0.40); --board-sel: rgba(80,20,120,0.5); }
+.theme-night  { --board-light: #b0b4b8; --board-dark: #4a4f54; --board-last: rgba(180,180,60,0.4);  --board-sel: rgba(60,60,100,0.5); }

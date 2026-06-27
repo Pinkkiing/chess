@@ -1,103 +1,72 @@
+/* ================================================================
+   APP SHELL + BOUTONS GLOBAUX
+   Tokens : Caïssa Design System (ds-tokens.css + compat.css)
+   ================================================================ */
+
+/* ── Layout ──────────────────────────────────────────────────── */
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
-  background: #12121f;
-  color: #e0e0e0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  background-image: var(--grad-glow);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-sans);
 }
 
 .app__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
-  background: #0d0d1a;
-  border-bottom: 1px solid #2a2a40;
+  padding: var(--space-3) var(--space-6);
+  background: var(--bg-elevated);
+  background-image: var(--grad-surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
+}
+
+.app__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 .app__header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.lichess-user-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: #b58863;
-  font-weight: 600;
-}
-
-.btn--sm { padding: 4px 10px; font-size: 0.8rem; }
-
-.app__header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: var(--space-2);
 }
 
 .app__mode-label {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #b58863;
-  letter-spacing: 0.03em;
-}
-
-.bot-thinking {
-  font-size: 1rem;
-  animation: pulse 1s infinite;
-}
-
-.btn {
-  padding: 8px 18px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: background 0.2s, color 0.2s;
-}
-
-.btn--ghost {
-  background: transparent;
-  color: #aaa;
-  border: 1px solid #333;
-}
-
-.btn--ghost:hover {
-  background: #1e1e2e;
-  color: #e0e0e0;
-  border-color: #555;
-}
-
-.btn--danger {
-  color: #e05050 !important;
-  border-color: #5a2020 !important;
-}
-
-.btn--danger:hover {
-  background: rgba(200, 50, 50, 0.15) !important;
-  border-color: #e05050 !important;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: var(--ls-tight);
 }
 
 .app__main {
   display: flex;
-  gap: 16px;
+  gap: var(--space-4);
   align-items: flex-start;
   justify-content: center;
-  padding: 24px 16px;
+  padding: var(--space-6) var(--space-4);
   flex: 1;
 }
 
 .game-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
   align-items: stretch;
 }
 
@@ -111,69 +80,158 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .game-panel__board-row {
   display: flex;
   align-items: stretch;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .game-panel__actions {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   justify-content: center;
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
   width: 220px;
   min-width: 180px;
-  padding-top: 4px;
+  padding-top: var(--space-1);
 }
 
+/* ── Buttons (legacy .btn — maps to c-btn styles) ────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  background: var(--surface-2);
+  color: var(--text);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.btn:hover  { background: var(--hover); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn--sm {
+  padding: 6px 12px;
+  font-size: var(--fs-sm);
+  border-radius: var(--r-sm);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+.btn--ghost:hover {
+  background: var(--hover);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn--primary {
+  background: var(--grad-brand);
+  color: #fff;
+  border: none;
+  box-shadow: var(--glow-accent-strong);
+}
+.btn--primary:hover   { filter: brightness(1.06); }
+.btn--primary:disabled { opacity: 0.4; cursor: not-allowed; filter: none; }
+
+.btn--danger {
+  color: var(--c-danger) !important;
+  border-color: var(--c-danger-border) !important;
+}
+.btn--danger:hover {
+  background: var(--c-danger-soft) !important;
+  border-color: var(--c-danger) !important;
+}
+
+/* ── Lichess user badge ──────────────────────────────────── */
+.lichess-user-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: var(--fw-bold);
+}
+
+/* ── Bot thinking ────────────────────────────────────────── */
+.bot-thinking {
+  font-size: var(--fs-md);
+  animation: pulse var(--dur-slow) infinite var(--ease-in-out);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ── Result banner ───────────────────────────────────────── */
+.result-banner {
+  background: var(--grad-brand);
+  color: #fff;
+  font-weight: var(--fw-extrabold);
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--r-lg);
+  font-size: var(--fs-md);
+  box-shadow: var(--glow-accent-strong);
+}
+
+/* ── Analysis progress ───────────────────────────────────── */
 .analysis-progress {
   position: relative;
   height: 24px;
-  background: #1a1a2e;
-  border-radius: 6px;
+  background: var(--surface);
+  border-radius: var(--r-md);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  color: #888;
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
 }
 
 .analysis-progress__bar {
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  background: #b58863;
-  opacity: 0.3;
+  background: var(--grad-brand);
+  opacity: 0.4;
   transition: width 0.3s;
 }
 
-.result-banner {
-  background: #b58863;
-  color: #fff;
-  font-weight: 700;
-  text-align: center;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
+/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 700px) {
   .app__main {
     flex-direction: column;
     align-items: center;
-    padding: 16px;
+    padding: var(--space-4);
   }
-
   .sidebar {
     width: 100%;
     max-width: 560px;

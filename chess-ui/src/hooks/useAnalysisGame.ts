@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Chess } from 'chess.js';
 import type { GameState, Color } from '../types/game';
 
@@ -41,17 +41,22 @@ export function useAnalysisGame() {
     currentIndex: -1, allMoves: [], lastMove: undefined,
   });
 
+  // Always-fresh ref — lets makeMove/getLegalMoves read current state
+  // without being recreated on every render (avoids stale closures in Board).
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   const makeMove = useCallback((from: string, to: string): boolean => {
-    const chess = replayToIndex(state.allMoves, state.currentIndex);
+    const { allMoves, currentIndex } = stateRef.current;
+    const chess = replayToIndex(allMoves, currentIndex);
     try {
       const result = chess.move({ from, to, promotion: 'q' });
       if (!result) return false;
-      const newMoves = [...state.allMoves.slice(0, state.currentIndex + 1), result.san];
-      const newIndex = state.currentIndex + 1;
-      setState({ ...chessToState(chess), currentIndex: newIndex, allMoves: newMoves });
+      const newMoves = [...allMoves.slice(0, currentIndex + 1), result.san];
+      setState({ ...chessToState(chess), currentIndex: currentIndex + 1, allMoves: newMoves });
       return true;
     } catch { return false; }
-  }, [state]);
+  }, []); // stable — reads from stateRef.current
 
   const goToIndex = useCallback((index: number) => {
     setState(prev => {
@@ -95,10 +100,11 @@ export function useAnalysisGame() {
   }, []);
 
   const getLegalMoves = useCallback((square: string): string[] => {
-    const chess = replayToIndex(state.allMoves, state.currentIndex);
+    const { allMoves, currentIndex } = stateRef.current;
+    const chess = replayToIndex(allMoves, currentIndex);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return chess.moves({ square: square as any, verbose: true }).map(m => m.to);
-  }, [state]);
+  }, []); // stable — reads from stateRef.current
 
   return { state, makeMove, goBack, goForward, goToIndex, loadFen, loadPgn, reset, getLegalMoves };
 }

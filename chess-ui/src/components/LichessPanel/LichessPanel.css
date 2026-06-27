@@ -1,98 +1,223 @@
 .lichess-panel {
-  background: #1a1a2e;
-  border-radius: 8px;
-  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  border: 1px solid #2a2a40;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
 }
 
-.lichess-panel__user {
+/* ── Header ─────────────────────────────────────────────── */
+.lp-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-elevated);
+  background-image: var(--grad-surface);
+  border-bottom: 1px solid var(--border);
 }
 
-.lichess-panel__avatar {
-  font-size: 1.5rem;
+.lp-header__title {
+  flex: 1;
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-base);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.lichess-panel__username {
-  font-weight: 700;
-  color: #e0e0e0;
-  font-size: 0.95rem;
+.lp-header__user {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.lichess-panel__rating {
-  font-size: 0.8rem;
-  color: #888;
+.lp-header__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-success, #4fc97e);
 }
 
-.lichess-panel__vs {
-  font-size: 0.9rem;
-  color: #ccc;
+/* ── Section ─────────────────────────────────────────────── */
+.lp-section + .lp-section {
+  border-top: 1px solid var(--border);
 }
 
-.lichess-panel__color {
-  font-size: 0.8rem;
-  color: #b58863;
-  margin-top: 4px;
+.lp-section__head {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4) var(--space-1);
+  gap: var(--space-3);
 }
 
-.lichess-panel__game {
+.lp-section__label-block {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1px;
+  min-width: 90px;
 }
 
-.lichess-panel__seek {
+.lp-section__name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+.lp-section__rating {
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: var(--fw-bold);
+}
+
+/* ── Presets row ─────────────────────────────────────────── */
+.lp-presets {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4) var(--space-3);
 }
 
-.preset-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
+.lp-btn {
+  padding: 5px 12px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    box-shadow var(--dur-fast);
 }
 
-.btn--preset {
-  background: #252535;
-  color: #ccc;
-  border: 1px solid #333;
-  font-size: 0.85rem;
-  padding: 6px;
+.lp-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+  border-color: var(--accent-soft);
 }
 
-.btn--preset:hover { background: #303050; }
-.btn--preset-active { border-color: #b58863; color: #e0c090; }
-
-.btn--primary {
-  background: #b58863;
+.lp-btn--active {
+  background: var(--grad-brand);
   color: #fff;
+  border-color: transparent;
+  box-shadow: var(--glow-accent);
+}
+
+/* ── Personnalisée ──────────────────────────────────────── */
+.lp-custom {
+  padding: 0 var(--space-4) var(--space-4);
+  display: none;
+}
+
+.lp-custom--on { display: block; }
+
+.lp-slider-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.lp-slider-label {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  min-width: 80px;
+}
+
+.lp-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--surface-3);
+  cursor: pointer;
+}
+
+.lp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--glow-accent-strong);
+  cursor: pointer;
+}
+
+.lp-slider-val {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  font-weight: var(--fw-bold);
+  min-width: 36px;
+  text-align: right;
+}
+
+.lp-mode-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.lp-mode-btn {
+  flex: 1;
+  padding: 7px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  font-weight: var(--fw-semibold);
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+}
+
+.lp-mode-btn:hover { border-color: var(--accent-soft); color: var(--text); }
+.lp-mode-btn--on { border-color: var(--c-line-accent); color: var(--accent); background: var(--accent-softer); }
+
+/* ── Seek button ─────────────────────────────────────────── */
+.lp-seek {
+  margin: 0 var(--space-4) var(--space-4);
+  padding: 11px;
+  width: calc(100% - var(--space-8));
+  border-radius: var(--r-md);
   border: none;
-  padding: 10px;
-  font-weight: 600;
+  background: var(--grad-brand);
+  color: #fff;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  box-shadow: var(--glow-accent-strong);
+  transition: filter var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
-.btn--primary:hover { background: #c99a75; }
-.btn--primary:disabled { background: #5a4a3a; color: #888; cursor: default; }
+.lp-seek:hover  { filter: brightness(1.08); transform: translateY(-1px); }
+.lp-seek:active { transform: translateY(0); }
+.lp-seek:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
 
-.btn--danger {
-  background: #6b2020;
-  color: #ffaaaa;
-  border: none;
-  padding: 8px 14px;
-  font-size: 0.85rem;
+/* ── Auth prompt ─────────────────────────────────────────── */
+.lp-auth {
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
 }
 
-.btn--danger:hover { background: #8b2828; }
-
-.lichess-panel__error {
-  font-size: 0.75rem;
-  color: #ff8888;
-  margin: 0;
-  line-height: 1.4;
-}
+.lp-auth__text { font-size: var(--fs-sm); color: var(--text-faint); margin: 0; }

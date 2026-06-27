@@ -1,5 +1,20 @@
 const BASE = 'https://lichess.org';
 
+export interface RatingHistoryEntry {
+  name: string;
+  points: [number, number, number, number][]; // [year, month(0-indexed), day, rating]
+}
+
+export async function fetchRatingHistory(username: string): Promise<RatingHistoryEntry[]> {
+  try {
+    const r = await fetch(`${BASE}/api/user/${username}/rating-history`);
+    if (!r.ok) return [];
+    return r.json();
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchAccount(token: string) {
   const r = await fetch(`${BASE}/api/account`, {
     headers: { Authorization: `Bearer ${token}` },

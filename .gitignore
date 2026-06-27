@@ -4,6 +4,9 @@ lila/
 # Claude Code (config locale)
 .claude/
 
+# packages-lock
+package-lock.json
+
 # Dépendances & build
 chess-ui/node_modules/
 chess-ui/dist/

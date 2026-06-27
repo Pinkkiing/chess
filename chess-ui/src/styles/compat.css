@@ -1,0 +1,73 @@
+/* ================================================================
+   COMPAT — Aliases ancien système → Caïssa Design System
+   Permet aux composants existants de fonctionner sans modification.
+   ================================================================ */
+:root {
+  /* Backgrounds */
+  --c-bg:        var(--bg);
+  --c-header:    var(--bg-elevated);
+  --c-surface-1: var(--surface);
+  --c-surface-2: var(--surface-2);
+  --c-surface-3: var(--surface-3);
+  --c-border:    var(--border);
+  --c-border-hi: var(--border-strong);
+
+  /* Text */
+  --c-text-1: var(--text);
+  --c-text-2: var(--c-text-300);
+  --c-text-3: var(--text-muted);
+  --c-text-4: var(--text-faint);
+
+  /* Accent */
+  --c-accent:       var(--accent);
+  --c-accent-hover: var(--accent-strong);
+  --c-accent-light: var(--c-violet-200);
+  --c-accent-dim:   var(--surface-3);
+
+  /* Danger */
+  --c-danger-bg:     var(--c-danger-soft);
+  --c-danger-border: rgba(229, 112, 138, 0.35);
+
+  /* Spacing */
+  --sp-1: var(--space-1);
+  --sp-2: var(--space-2);
+  --sp-3: var(--space-3);
+  --sp-4: var(--space-4);
+  --sp-5: var(--space-5);
+  --sp-6: var(--space-6);
+
+  /* Typography */
+  --font-base: var(--font-sans);
+  --text-xs:   var(--fs-xs);
+  --text-sm:   var(--fs-sm);
+  --text-md:   var(--fs-base);
+  --text-lg:   var(--fs-md);
+  --text-xl:   var(--fs-lg);
+  --fw-normal: var(--fw-regular);
+  --fw-medium: var(--fw-semibold);
+
+  /* Radius */
+  --r-sm:  var(--r-xs);
+  --r-md:  var(--r-sm);
+  --r-lg:  var(--r-md);
+
+  /* Shadows */
+  --shadow-card:  var(--shadow-sm);
+  --shadow-panel: var(--shadow-md);
+  --shadow-modal: var(--shadow-xl);
+
+  /* Transitions */
+  --t-fast: var(--dur-fast);
+  --t-base: var(--dur-base);
+
+  /* Move classifications (non présentes dans le DS) */
+  --c-brilliant:  #21d0d0;
+  --c-excellent:  #5ca0f5;
+  --c-best:       #4fc97e;
+  --c-very-good:  #80c080;
+  --c-good:       #96a8c8;
+  --c-inaccuracy: #f5c030;
+  --c-mistake:    #e08030;
+  --c-miss:       #d04040;
+  --c-blunder:    #cc2020;
+}

@@ -1,19 +1,10 @@
+/* ── Caïssa Design System ──────────────────────────────── */
+@import './styles/ds-tokens.css';
+@import './styles/ds-base.css';
+@import './styles/ds-components.css';
+@import './styles/compat.css';
+
+/* ── Chessground + board themes ────────────────────────── */
 @import '@lichess-org/chessground/assets/chessground.base.css';
 @import '@lichess-org/chessground/assets/chessground.cburnett.css';
 @import './styles/board-themes.css';
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #12121f;
-  color: #e0e0e0;
-  -webkit-font-smoothing: antialiased;
-}
-
-#root {
-  min-height: 100svh;
-}

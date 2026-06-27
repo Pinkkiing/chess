@@ -1,55 +1,57 @@
 .puzzle-panel {
-  background: #1a1a2e;
-  border-radius: 8px;
-  padding: 14px;
-  border: 1px solid #2a2a40;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
-.puzzle-loading { color: #888; font-size: 0.9rem; text-align: center; padding: 12px 0; }
+.puzzle-loading { color: var(--text-faint); font-size: var(--fs-base); text-align: center; padding: var(--space-3) 0; }
 
 .puzzle-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .puzzle-rating {
-  font-weight: 700;
-  color: #b58863;
-  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  font-weight: var(--fw-bold);
+  color: var(--accent);
+  font-size: var(--fs-base);
 }
 
-.puzzle-themes { display: flex; gap: 4px; flex-wrap: wrap; }
+.puzzle-themes { display: flex; gap: var(--space-1); flex-wrap: wrap; }
 
 .puzzle-theme-tag {
-  font-size: 0.68rem;
-  padding: 2px 6px;
-  background: #252535;
-  border-radius: 4px;
-  color: #888;
+  font-size: var(--fs-xs);
+  padding: 2px 7px;
+  background: var(--accent-softer);
+  border: 1px solid var(--accent-soft);
+  border-radius: var(--r-full);
+  color: var(--accent);
 }
 
 .puzzle-instruction {
-  font-size: 0.85rem;
-  color: #ccc;
+  font-size: var(--fs-sm);
+  color: var(--text);
   margin: 0;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .puzzle-status {
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-sm);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-base);
   text-align: center;
 }
 
-.puzzle-status--wrong   { background: rgba(180,40,40,0.25); color: #ff9999; }
-.puzzle-status--ok      { background: rgba(40,120,60,0.25); color: #88ee99; }
-.puzzle-status--solved  { background: rgba(181,136,99,0.2); color: #e0c090; }
+.puzzle-status--wrong  { background: var(--c-danger-soft); color: var(--c-danger); }
+.puzzle-status--ok     { background: var(--c-success-soft); color: var(--c-success); }
+.puzzle-status--solved { background: var(--accent-soft); color: var(--accent); }
 
-.puzzle-actions { display: flex; gap: 8px; flex-direction: column; }
+.puzzle-actions { display: flex; gap: var(--space-2); flex-direction: column; }

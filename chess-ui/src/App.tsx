@@ -6,7 +6,6 @@ import { Clock } from './components/Clock/Clock';
 import { MoveList } from './components/MoveList/MoveList';
 import { PlayerInfo } from './components/PlayerInfo/PlayerInfo';
 import { EvalBar } from './components/EvalBar/EvalBar';
-import { Settings } from './components/Settings/Settings';
 import { LichessPanel } from './components/LichessPanel/LichessPanel';
 import { ModeSelect } from './components/ModeSelect/ModeSelect';
 import { AnalysisControls } from './components/AnalysisControls/AnalysisControls';
@@ -27,6 +26,8 @@ import { CapturedPieces } from './components/CapturedPieces/CapturedPieces';
 import { EvalChart } from './components/EvalChart/EvalChart';
 import { AnalysisSummary } from './components/AnalysisSummary/AnalysisSummary';
 import { GameHistory } from './components/GameHistory/GameHistory';
+import { Profile } from './components/Profile/Profile';
+import { Navbar } from './components/Navbar/Navbar';
 import { computeCaptured } from './utils/capturedPieces';
 import { useGameHistory } from './hooks/useGameHistory';
 import type { Player, Color, EndReason } from './types/game';
@@ -164,7 +165,7 @@ export default function App() {
   }
 
   // ─── Mode select ──────────────────────────────────────────────────────────
-  function handleModeSelect(m: GameMode, bc?: BotConfig) {
+  function handleModeSelect(m: Exclude<GameMode, 'menu' | 'history' | 'profile'>, bc?: BotConfig) {
     if (m === 'bot' && bc) {
       const color: Color = bc.playerColor === 'random'
         ? (Math.random() < 0.5 ? 'white' : 'black')
@@ -175,24 +176,53 @@ export default function App() {
     setMode(m);
   }
 
+  const navbar = (
+    <Navbar
+      mode={mode}
+      onNavigate={setMode}
+      user={user}
+      authLoading={authLoading}
+      onLogin={login}
+      onLogout={logout}
+    />
+  );
+
   if (mode === 'history') {
     return (
-      <GameHistory
-        games={games}
-        onAnalyze={analyzeGame}
-        onClear={clearHistory}
-        onBack={() => setMode('menu')}
-      />
+      <div className="app">
+        {navbar}
+        <GameHistory
+          games={games}
+          onAnalyze={analyzeGame}
+          onClear={clearHistory}
+        />
+      </div>
+    );
+  }
+
+  if (mode === 'profile') {
+    return (
+      <div className="app">
+        {navbar}
+        <Profile
+          user={user}
+          games={games}
+          onAnalyze={analyzeGame}
+        />
+      </div>
     );
   }
 
   if (mode === 'menu') {
     return (
-      <ModeSelect
-        onSelect={handleModeSelect}
-        lichessUser={user}
-        onLichessLogin={login}
-      />
+      <div className="app">
+        {navbar}
+        <ModeSelect
+          onSelect={handleModeSelect}
+          lichessUser={user}
+          onLichessLogin={login}
+        />
+      </div>
     );
   }
 
@@ -281,31 +311,9 @@ export default function App() {
   const topAdvantage    = topIsBlack ? -captured.advantage : captured.advantage;
   const bottomAdvantage = topIsBlack ?  captured.advantage : -captured.advantage;
 
-  const modeLabel: Record<GameMode, string> = {
-    menu: '', local: '2 Joueurs', bot: 'vs Bot', lichess: 'Lichess', analysis: 'Analyse', puzzle: 'Puzzles', history: 'Historique',
-  };
-
   return (
     <div className="app">
-      <header className="app__header">
-        <div className="app__header-left">
-          <button className="btn btn--ghost btn--sm" onClick={() => setMode('menu')}>← Menu</button>
-          <span className="app__mode-label">{modeLabel[mode]}</span>
-        </div>
-        <div className="app__header-actions">
-          <Settings />
-          {token ? (
-            <div className="lichess-user-badge">
-              <span>{user?.username}</span>
-              <button className="btn btn--ghost btn--sm" onClick={logout}>✕</button>
-            </div>
-          ) : mode === 'lichess' ? (
-            <button className="btn btn--ghost btn--sm" onClick={login} disabled={authLoading}>
-              {authLoading ? '…' : '🔗 Connexion Lichess'}
-            </button>
-          ) : null}
-        </div>
-      </header>
+      {navbar}
 
       <main className="app__main">
         <section className="game-panel">

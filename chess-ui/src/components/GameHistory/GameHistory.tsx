@@ -26,11 +26,10 @@ function formatDate(iso: string) {
     + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 }
 
-export function GameHistory({ games, onAnalyze, onClear, onBack }: GameHistoryProps) {
+export function GameHistory({ games, onAnalyze, onClear }: Omit<GameHistoryProps, 'onBack'>) {
   return (
     <div className="history-screen">
       <header className="history-header">
-        <button className="btn btn--ghost btn--sm" onClick={onBack}>← Menu</button>
         <h1 className="history-title">Historique des parties</h1>
         {games.length > 0 && (
           <button className="btn btn--ghost btn--sm btn--danger" onClick={onClear}>

@@ -3,7 +3,7 @@ import type { GameMode, BotConfig } from '../../types/mode';
 import './ModeSelect.css';
 
 interface ModeSelectProps {
-  onSelect: (mode: GameMode, botConfig?: BotConfig) => void;
+  onSelect: (mode: Exclude<GameMode, 'menu' | 'history' | 'profile'>, botConfig?: BotConfig) => void;
   lichessUser?: { username: string } | null;
   onLichessLogin: () => void;
 }
@@ -19,8 +19,8 @@ export function ModeSelect({ onSelect, lichessUser, onLichessLogin }: ModeSelect
 
   return (
     <div className="mode-select">
-      <h1 className="mode-select__title">♟ Chess</h1>
-      <p className="mode-select__subtitle">Choisissez un mode de jeu</p>
+      <h1 className="mode-select__title">Choisissez un mode</h1>
+      <p className="mode-select__subtitle">Jouez, entraînez-vous, analysez</p>
 
       <div className="mode-grid">
 
@@ -100,11 +100,6 @@ export function ModeSelect({ onSelect, lichessUser, onLichessLogin }: ModeSelect
 
       </div>
 
-      <div className="mode-select__footer">
-        <button className="btn btn--ghost btn--sm" onClick={() => onSelect('history')}>
-          📋 Historique des parties
-        </button>
-      </div>
     </div>
   );
 }
