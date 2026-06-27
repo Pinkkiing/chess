@@ -1,0 +1,9 @@
+/* =====================================================================
+   CAÏSSA — Point d'entrée global.
+   Les consommateurs n'importent QUE ce fichier :
+       import './chess-design-system/styles.css'
+   (ou <link rel="stylesheet" href="chess-design-system/styles.css">)
+   ===================================================================== */
+@import './tokens.css';
+@import './base.css';
+@import './components.css';

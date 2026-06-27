@@ -1,0 +1,80 @@
+/* =====================================================================
+   CAÏSSA — Base : reset léger, typographie de fond, helpers
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: var(--grad-glow);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Titres ------------------------------------------------------------ */
+h1, h2, h3, h4 {
+  font-weight: var(--fw-extrabold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+}
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); font-weight: var(--fw-bold); }
+
+p { color: var(--text-muted); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-strong); }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+/* Sélection texte */
+::selection { background: var(--accent-soft); color: var(--text); }
+
+/* Barres de défilement ---------------------------------------------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--r-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-soft); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Focus visible cohérent -------------------------------------------- */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent-strong);
+  border-radius: var(--r-sm);
+}
+
+/* =====================================================================
+   HELPERS UTILITAIRES (minimal, optionnels)
+   ===================================================================== */
+.u-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.u-gradient-text {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.u-muted { color: var(--text-muted); }
+.u-faint { color: var(--text-faint); }
+.u-caps { text-transform: uppercase; letter-spacing: var(--ls-caps); font-size: var(--fs-xs); font-weight: var(--fw-bold); }
+
+.u-row { display: flex; align-items: center; gap: var(--space-3); }
+.u-col { display: flex; flex-direction: column; gap: var(--space-3); }
+.u-wrap { flex-wrap: wrap; }
+.u-grow { flex: 1; min-width: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

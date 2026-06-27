@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caïssa — Design System</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* Mise en page de la galerie (propre à cette page de démo) */
+  .wrap { max-width: 1140px; margin: 0 auto; padding: var(--space-10) var(--space-6) var(--space-20); }
+  .hero { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-10); flex-wrap: wrap; }
+  .hero h1 { font-size: var(--fs-4xl); }
+  .hero p { font-size: var(--fs-md); max-width: 46ch; margin-top: var(--space-3); }
+  .sec { margin-top: var(--space-12); }
+  .sec__label { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--text-faint); font-weight: var(--fw-bold); margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-3); }
+  .sec__label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .grid { display: grid; gap: var(--space-5); }
+  .cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .stack { display: flex; flex-direction: column; gap: var(--space-4); }
+  .swatch { height: 64px; border-radius: var(--r-md); border: 1px solid var(--border); display: flex; align-items: flex-end; padding: 8px; font-size: var(--fs-xs); font-weight: var(--fw-semibold); }
+  .swrap { display: flex; flex-direction: column; gap: 6px; }
+  .swrap small { color: var(--text-faint); font-family: var(--font-mono); font-size: 11px; }
+  .typecard { display: flex; flex-direction: column; gap: var(--space-3); }
+  .typecard > div { display: flex; align-items: baseline; gap: var(--space-4); }
+  .typecard span.tag { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); width: 56px; flex: none; }
+  @media (max-width: 760px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" data-presets="react">
+// Charge components.jsx (fichier ESM avec `export`) sans bundler :
+// on retire les mots-clés `export`, on transpile, puis on exécute —
+// le fichier expose lui-même les composants sur window en fin de module.
+(async function bootstrap() {
+  const src = await (await fetch('components.jsx')).text();
+  const stripped = src.replace(/export\s+function/g, 'function');
+  const out = Babel.transform(stripped, { presets: ['react'] }).code;
+  new Function('React', out)(React);
+  renderDemo();
+})();
+
+const { useState } = React;
+
+function Demo() {
+  const { Button, IconButton, Card, Panel, Badge, Tier, Input, Textarea, Select,
+    Switch, Checkbox, Radio, Segmented, Slider, Tabs, Avatar, Modal, Toast, Progress } = window;
+  const [tab, setTab] = useState('parties');
+  const [seg, setSeg] = useState('10+0');
+  const [vol, setVol] = useState(65);
+  const [sound, setSound] = useState(true);
+  const [coords, setCoords] = useState(true);
+  const [agree, setAgree] = useState(true);
+  const [side, setSide] = useState('blancs');
+  const [modal, setModal] = useState(false);
+
+  return (
+    <div>
+      {/* NAV */}
+      <nav className="c-nav">
+        <div className="c-brand"><span className="c-brand__mark">♞</span><span className="c-brand__name">CAÏSSA</span></div>
+        <div className="c-nav__links">
+          <a className="c-nav__link c-nav__link--active">Jouer</a>
+          <a className="c-nav__link">Apprendre</a>
+          <a className="c-nav__link">Puzzles</a>
+          <a className="c-nav__link">Regarder</a>
+        </div>
+        <div className="c-nav__spacer" />
+        <Button variant="ghost" size="sm">Connexion</Button>
+        <Button variant="primary" size="sm">S'inscrire</Button>
+      </nav>
+
+      <div className="wrap">
+        <header className="hero">
+          <div>
+            <h1 className="u-gradient-text" style={{ display: 'inline-block' }}>Caïssa</h1>
+            <p>Le design system de la plateforme d'échecs & d'apprentissage. Sombre, net, signé d'un dégradé mauve → violet.</p>
+          </div>
+          <div className="row">
+            <Tier level="master" />
+            <Tier level="gm" />
+          </div>
+        </header>
+
+        {/* COULEURS */}
+        <section className="sec">
+          <div className="sec__label">Couleurs</div>
+          <div className="grid cols-3">
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--grad-brand)', color: '#fff' }}>Dégradé marque</div><small>--grad-brand</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--accent)', color: '#1a1428' }}>Accent</div><small>--accent</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--accent-deep)', color: '#fff' }}>Accent deep</div><small>--accent-deep</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--surface)' }}>Surface</div><small>--surface</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--surface-2)' }}>Surface 2</div><small>--surface-2</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--bg)' }}>Fond</div><small>--bg</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--c-success)', color: '#0c0a14' }}>Succès</div><small>--c-success</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--c-warning)', color: '#0c0a14' }}>Alerte</div><small>--c-warning</small></div>
+            <div className="swrap"><div className="swatch" style={{ background: 'var(--c-danger)', color: '#0c0a14' }}>Danger</div><small>--c-danger</small></div>
+          </div>
+        </section>
+
+        {/* TYPOGRAPHIE */}
+        <section className="sec">
+          <div className="sec__label">Typographie · Plus Jakarta Sans + DM Mono</div>
+          <Card>
+            <div className="typecard">
+              <div><span className="tag">4xl/800</span><span style={{ fontSize: 'var(--fs-3xl)', fontWeight: 800, letterSpacing: 'var(--ls-tight)' }}>Échec et mat</span></div>
+              <div><span className="tag">xl/700</span><span style={{ fontSize: 'var(--fs-xl)', fontWeight: 700 }}>Ouverture italienne</span></div>
+              <div><span className="tag">base</span><span style={{ fontSize: 'var(--fs-base)' }}>Le cavalier contrôle quatre cases centrales.</span></div>
+              <div><span className="tag">mono</span><span className="u-mono" style={{ color: 'var(--accent)' }}>1. e4 e5  2. Cf3 Cc6  3. Fb5</span></div>
+            </div>
+          </Card>
+        </section>
+
+        {/* BOUTONS */}
+        <section className="sec">
+          <div className="sec__label">Boutons</div>
+          <div className="stack">
+            <div className="row">
+              <Button variant="primary">Nouvelle partie</Button>
+              <Button variant="secondary">Rejoindre</Button>
+              <Button variant="outline">Analyser</Button>
+              <Button variant="ghost">Annuler</Button>
+              <Button variant="danger">Abandonner</Button>
+            </div>
+            <div className="row">
+              <Button variant="primary" size="sm">Petit</Button>
+              <Button variant="primary">Moyen</Button>
+              <Button variant="primary" size="lg">Grand</Button>
+              <Button variant="primary" loading>Chargement</Button>
+              <Button variant="secondary" disabled>Désactivé</Button>
+              <IconButton variant="secondary" label="Retourner">⟲</IconButton>
+            </div>
+          </div>
+        </section>
+
+        {/* BADGES & NIVEAUX */}
+        <section className="sec">
+          <div className="sec__label">Badges & classification</div>
+          <div className="stack">
+            <div className="row">
+              <Badge tone="accent" dot>En ligne</Badge>
+              <Badge tone="success">+12</Badge>
+              <Badge tone="warning">Blitz</Badge>
+              <Badge tone="danger">Échec</Badge>
+              <Badge tone="info">Nouveau</Badge>
+              <Badge tone="solid">PRO</Badge>
+            </div>
+            <div className="row">
+              <Tier level="beginner" />
+              <Tier level="intermediate" />
+              <Tier level="advanced" />
+              <Tier level="expert" />
+              <Tier level="master" />
+              <Tier level="gm" />
+            </div>
+          </div>
+        </section>
+
+        {/* FORMULAIRES */}
+        <section className="sec">
+          <div className="sec__label">Formulaires & contrôles</div>
+          <div className="grid cols-2">
+            <Card>
+              <div className="stack">
+                <Input id="u" label="Nom d'utilisateur" placeholder="grand_roque" icon={<span>@</span>} />
+                <Input id="e" label="Email" defaultValue="invalide@" error="Adresse email invalide" />
+                <Select id="s" label="Cadence" defaultValue="rapid">
+                  <option value="bullet">Bullet · 1+0</option>
+                  <option value="blitz">Blitz · 5+0</option>
+                  <option value="rapid">Rapide · 10+5</option>
+                </Select>
+              </div>
+            </Card>
+            <Card>
+              <div className="stack">
+                <div>
+                  <div className="c-label" style={{ marginBottom: 8 }}>Format</div>
+                  <Segmented options={['1+0', '3+2', '10+0', '15+10']} value={seg} onChange={setSeg} />
+                </div>
+                <Slider label="Volume" value={vol} onChange={setVol} unit="%" />
+                <div className="row" style={{ gap: 'var(--space-5)' }}>
+                  <Switch label="Sons" checked={sound} onChange={setSound} />
+                  <Switch label="Coordonnées" checked={coords} onChange={setCoords} />
+                </div>
+                <div className="row" style={{ gap: 'var(--space-5)' }}>
+                  <Checkbox label="Premiers coups auto" checked={agree} onChange={setAgree} />
+                  <Radio name="side" label="Blancs" checked={side === 'blancs'} onChange={() => setSide('blancs')} />
+                  <Radio name="side" label="Noirs" checked={side === 'noirs'} onChange={() => setSide('noirs')} />
+                </div>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* PANELS / TABS / PROGRESS */}
+        <section className="sec">
+          <div className="sec__label">Panneaux, onglets & progression</div>
+          <div className="grid cols-2">
+            <Panel title="Partie en cours" action={<IconButton variant="ghost" size="sm" label="Plus">⋯</IconButton>}
+              foot={<div className="row" style={{ justifyContent: 'space-between', width: '100%' }}><span className="u-faint" style={{ fontSize: 'var(--fs-sm)' }}>Tour des blancs</span><Button variant="primary" size="sm">Jouer</Button></div>}>
+              <div className="stack">
+                <div className="row" style={{ justifyContent: 'space-between' }}>
+                  <div className="row"><Avatar name="Magnus" status="online" /><div><div style={{ fontWeight: 700 }}>Magnus Bot</div><span className="c-rating">2100</span></div></div>
+                  <span className="u-mono" style={{ fontSize: 'var(--fs-lg)' }}>4:32</span>
+                </div>
+                <hr className="c-divider" />
+                <Tabs tabs={[{ value: 'parties', label: 'Coups' }, { value: 'chat', label: 'Chat' }, { value: 'info', label: 'Infos' }]} value={tab} onChange={setTab} />
+                <div className="u-muted" style={{ fontSize: 'var(--fs-sm)', paddingTop: 8 }}>
+                  {tab === 'parties' && <span className="u-mono">1. e4 e5  2. Cf3 Cc6  3. Fb5 a6</span>}
+                  {tab === 'chat' && 'Bonne chance !'}
+                  {tab === 'info' && 'Espagnole, variante Morphy.'}
+                </div>
+              </div>
+            </Panel>
+            <Card>
+              <div className="stack">
+                <h4>Cours : finales de pions</h4>
+                <p style={{ fontSize: 'var(--fs-sm)' }}>Progression du module</p>
+                <Progress value={68} />
+                <div className="row" style={{ justifyContent: 'space-between' }}>
+                  <Badge tone="accent">68 % terminé</Badge>
+                  <Button variant="outline" size="sm">Continuer</Button>
+                </div>
+                <hr className="c-divider" />
+                <div className="row">
+                  <Button variant="primary" onClick={() => setModal(true)}>Ouvrir une modale</Button>
+                  <Toast tone="success">Coup enregistré</Toast>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </section>
+      </div>
+
+      <Modal open={modal} onClose={() => setModal(false)} title="Proposer la nulle ?"
+        footer={<><Button variant="ghost" onClick={() => setModal(false)}>Annuler</Button><Button variant="primary" onClick={() => setModal(false)}>Proposer</Button></>}>
+        Votre adversaire recevra une proposition de partie nulle. Vous pouvez continuer à jouer en attendant sa réponse.
+      </Modal>
+    </div>
+  );
+}
+
+function renderDemo() {
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+}
+</script>
+</body>
+</html>
