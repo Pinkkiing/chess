@@ -31,11 +31,12 @@ export async function makeMove(token: string, gameId: string, uciMove: string) {
   return r.ok;
 }
 
-export async function resignGame(token: string, gameId: string) {
-  await fetch(`${BASE}/api/board/game/${gameId}/resign`, {
+export async function resignGame(token: string, gameId: string): Promise<boolean> {
+  const r = await fetch(`${BASE}/api/board/game/${gameId}/resign`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
   });
+  return r.ok;
 }
 
 export function streamBoardEvents(
@@ -103,17 +104,17 @@ async function readNdJson<T>(r: Response, cb: (v: T) => void) {
   const reader = r.body!.getReader();
   const dec = new TextDecoder();
   let buf = '';
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buf += dec.decode(value, { stream: true });
+  let chunk = await reader.read();
+  while (!chunk.done) {
+    buf += dec.decode(chunk.value, { stream: true });
     const lines = buf.split('\n');
     buf = lines.pop() ?? '';
     for (const line of lines) {
       if (line.trim()) {
-        try { cb(JSON.parse(line)); } catch { /* skip malformed */ }
+        try { cb(JSON.parse(line) as T); } catch { /* skip malformed */ }
       }
     }
+    chunk = await reader.read();
   }
 }
 

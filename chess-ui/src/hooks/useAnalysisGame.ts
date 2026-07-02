@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { Chess } from 'chess.js';
+import { Chess, type Square } from 'chess.js';
 import type { GameState, Color } from '../types/game';
 
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -102,8 +102,7 @@ export function useAnalysisGame() {
   const getLegalMoves = useCallback((square: string): string[] => {
     const { allMoves, currentIndex } = stateRef.current;
     const chess = replayToIndex(allMoves, currentIndex);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return chess.moves({ square: square as any, verbose: true }).map(m => m.to);
+    return chess.moves({ square: square as Square, verbose: true }).map(m => m.to);
   }, []); // stable — reads from stateRef.current
 
   return { state, makeMove, goBack, goForward, goToIndex, loadFen, loadPgn, reset, getLegalMoves };

@@ -225,6 +225,104 @@
   transition: width 0.3s;
 }
 
+/* ── Bot setup screen ────────────────────────────────────── */
+.bot-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--space-10) var(--space-6);
+  gap: var(--space-6);
+}
+
+.bot-setup__title {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: var(--ls-tight);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.bot-setup__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  background: var(--surface);
+  background-image: var(--grad-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--space-8) var(--space-8);
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+}
+
+.bot-setup__label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bot-setup__label strong { color: var(--accent); }
+
+.bot-setup__colors {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.bot-setup__cta {
+  width: 100%;
+  padding: 13px;
+  font-size: var(--fs-base);
+}
+
+/* ── Config controls (shared, used in bot setup) ─────────── */
+.config-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  outline: none;
+  cursor: pointer;
+}
+
+.config-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--glow-accent-strong);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.config-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+.color-btn {
+  flex: 1;
+  padding: 8px 4px;
+  font-size: var(--fs-xs);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color var(--dur-fast), color var(--dur-fast), background var(--dur-fast);
+  font-family: var(--font-sans);
+}
+
+.color-btn:hover { border-color: var(--accent-soft); color: var(--text); }
+.color-btn--active { border-color: var(--c-line-accent); color: var(--accent); background: var(--accent-softer); }
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 700px) {
   .app__main {

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Chess } from 'chess.js';
+import { Chess, type Square } from 'chess.js';
 import type { GameState, Color, EndReason } from '../types/game';
 
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -65,10 +65,7 @@ export function useChessGame() {
   }, []);
 
   const getLegalMoves = useCallback(
-    (square: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return chess.moves({ square: square as any, verbose: true }).map((m) => m.to);
-    },
+    (square: string) => chess.moves({ square: square as Square, verbose: true }).map((m) => m.to),
     [chess],
   );
 

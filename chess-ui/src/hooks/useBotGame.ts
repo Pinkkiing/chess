@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Chess } from 'chess.js';
+import { Chess, type Square } from 'chess.js';
 import type { GameState, Color, EndReason } from '../types/game';
 
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -104,10 +104,10 @@ export function useBotGame(playerColor: Color, skillLevel: number) {
     }
   }, [gameState.turn, gameState.status, playerColor, syncState]);
 
-  const getLegalMoves = useCallback((square: string): string[] => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return chessRef.current.moves({ square: square as any, verbose: true }).map(m => m.to);
-  }, []);
+  const getLegalMoves = useCallback(
+    (square: string): string[] => chessRef.current.moves({ square: square as Square, verbose: true }).map(m => m.to),
+    [],
+  );
 
   const reset = useCallback(() => {
     chessRef.current.reset();

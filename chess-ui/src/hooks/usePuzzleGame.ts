@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Chess } from 'chess.js';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { Chess, type Square } from 'chess.js';
 import { fetchRandomPuzzle, fetchDailyPuzzle, type LichessPuzzle } from '../api/puzzles';
 import type { GameState, Color } from '../types/game';
 
@@ -22,6 +22,15 @@ export function usePuzzleGame() {
   const [ps, setPs] = useState<PuzzleGameState>({
     puzzle: null, gameState: BLANK, status: 'loading', solutionIndex: 0, attemptedMove: null,
   });
+  const wrongTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const oppTimerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (wrongTimerRef.current !== null) clearTimeout(wrongTimerRef.current);
+      if (oppTimerRef.current !== null)   clearTimeout(oppTimerRef.current);
+    };
+  }, []);
 
   const applyUciMove = (fen: string, uci: string): string => {
     const chess = new Chess(fen);
@@ -71,8 +80,9 @@ export function usePuzzleGame() {
 
     if (!isCorrect) {
       setPs(prev => ({ ...prev, status: 'wrong', attemptedMove: uciAttempt }));
-      // Auto-reset after 1.5s
-      setTimeout(() => {
+      if (wrongTimerRef.current !== null) clearTimeout(wrongTimerRef.current);
+      wrongTimerRef.current = setTimeout(() => {
+        wrongTimerRef.current = null;
         setPs(prev => prev.status === 'wrong' ? { ...prev, status: 'playing', attemptedMove: null } : prev);
       }, 1500);
       return false;
@@ -97,7 +107,9 @@ export function usePuzzleGame() {
       solutionIndex: nextSolIdx,
     }));
 
-    setTimeout(() => {
+    if (oppTimerRef.current !== null) clearTimeout(oppTimerRef.current);
+    oppTimerRef.current = setTimeout(() => {
+      oppTimerRef.current = null;
       setPs(prev => {
         if (prev.status !== 'correct_partial') return prev;
         const fenAfterOpp = applyUciMove(fenAfterPlayer, opponentUci);
@@ -118,8 +130,7 @@ export function usePuzzleGame() {
   const getLegalMoves = useCallback((square: string): string[] => {
     if (!ps.puzzle || ps.status !== 'playing') return [];
     const chess = new Chess(ps.gameState.fen);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return chess.moves({ square: square as any, verbose: true }).map(m => m.to);
+    return chess.moves({ square: square as Square, verbose: true }).map(m => m.to);
   }, [ps]);
 
   const nextPuzzle = useCallback(() => loadPuzzle(false), [loadPuzzle]);

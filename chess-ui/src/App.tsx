@@ -36,6 +36,16 @@ import './App.css';
 
 const INITIAL_TIME_MS = 10 * 60 * 1000;
 
+type GameDescriptor = {
+  fen: string; turn: Color; check: boolean; moves: string[]; status: string; winner?: Color; endReason?: EndReason;
+  orientation: Color; myColor?: Color;
+  whiteName: string; blackName: string; whiteRating?: number; blackRating?: number;
+  whiteTimeMs?: number; blackTimeMs?: number;
+  onMove: (f: string, t: string) => boolean | Promise<boolean>;
+  getLegalMoves?: (sq: string) => string[];
+  currentMoveIndex?: number;
+};
+
 // ─── Small helper hooks kept inline ──────────────────────────────────────────
 function useLocalClock(turn: Color, status: string, moveCount: number) {
   const [clock, setClock] = useState({ white: INITIAL_TIME_MS, black: INITIAL_TIME_MS, running: false, activeColor: 'white' as Color });
@@ -63,6 +73,14 @@ export default function App() {
   const [mode, setMode] = useState<GameMode>('menu');
   const [botConfig, setBotConfig] = useState<BotConfig>({ skillLevel: 3, playerColor: 'white' });
   const [botPlayerColor, setBotPlayerColor] = useState<Color>('white');
+  const [botReady, setBotReady] = useState(false);
+  const [botSkill, setBotSkill] = useState(3);
+  const [botColor, setBotColor] = useState<BotConfig['playerColor']>('white');
+
+  const DIFFICULTY_LABELS: Record<number, string> = {
+    1: 'Novice', 2: 'Débutant', 3: 'Casual', 4: 'Intermédiaire',
+    5: 'Avancé', 6: 'Expert', 7: 'Maître', 8: 'Maximum',
+  };
 
   const { analysisEnabled } = useTheme();
   const { games, addGame, clearHistory } = useGameHistory();
@@ -165,15 +183,18 @@ export default function App() {
   }
 
   // ─── Mode select ──────────────────────────────────────────────────────────
-  function handleModeSelect(m: Exclude<GameMode, 'menu' | 'history' | 'profile'>, bc?: BotConfig) {
-    if (m === 'bot' && bc) {
-      const color: Color = bc.playerColor === 'random'
-        ? (Math.random() < 0.5 ? 'white' : 'black')
-        : bc.playerColor;
-      setBotConfig(bc);
-      setBotPlayerColor(color);
-    }
+  function handleModeSelect(m: Exclude<GameMode, 'menu' | 'history' | 'profile'>) {
+    setBotReady(false);
     setMode(m);
+  }
+
+  function startBotGame() {
+    const color: Color = botColor === 'random'
+      ? (Math.random() < 0.5 ? 'white' : 'black')
+      : botColor;
+    setBotConfig({ skillLevel: botSkill, playerColor: botColor });
+    setBotPlayerColor(color);
+    setBotReady(true);
   }
 
   const navbar = (
@@ -226,17 +247,42 @@ export default function App() {
     );
   }
 
-  // ─── Build the active game descriptor based on mode ───────────────────────
-  type GameDescriptor = {
-    fen: string; turn: Color; check: boolean; moves: string[]; status: string; winner?: Color; endReason?: EndReason;
-    orientation: Color; myColor?: Color;
-    whiteName: string; blackName: string; whiteRating?: number; blackRating?: number;
-    whiteTimeMs?: number; blackTimeMs?: number;
-    onMove: (f: string, t: string) => boolean | Promise<boolean>;
-    getLegalMoves?: (sq: string) => string[];
-    currentMoveIndex?: number;
-  };
+  if (mode === 'bot' && !botReady) {
+    return (
+      <div className="app">
+        {navbar}
+        <div className="bot-setup">
+          <h2 className="bot-setup__title">🤖 vs Stockfish</h2>
+          <div className="bot-setup__card">
+            <label className="bot-setup__label">
+              Difficulté — <strong>{DIFFICULTY_LABELS[botSkill]}</strong>
+              <input
+                type="range" min={1} max={8} value={botSkill}
+                onChange={e => setBotSkill(Number(e.target.value))}
+                className="config-slider"
+              />
+            </label>
+            <div className="bot-setup__colors">
+              {(['white', 'black', 'random'] as const).map(c => (
+                <button
+                  key={c}
+                  className={`color-btn ${botColor === c ? 'color-btn--active' : ''}`}
+                  onClick={() => setBotColor(c)}
+                >
+                  {c === 'white' ? '♔ Blancs' : c === 'black' ? '♚ Noirs' : '🎲 Aléatoire'}
+                </button>
+              ))}
+            </div>
+            <button className="btn btn--primary bot-setup__cta" onClick={startBotGame}>
+              Jouer
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
+  // ─── Build the active game descriptor based on mode ───────────────────────
   let game: GameDescriptor;
 
   if (mode === 'local') {
@@ -363,7 +409,7 @@ export default function App() {
               )}
               <button
                 className="btn btn--ghost"
-                onClick={mode === 'bot' ? bot.reset : () => { local.reset(); resetClock(); }}
+                onClick={mode === 'bot' ? () => { bot.reset(); setBotReady(false); } : () => { local.reset(); resetClock(); }}
               >
                 ↺ Nouvelle partie
               </button>
@@ -451,7 +497,7 @@ export default function App() {
           myColor={game.myColor}
           whiteName={game.whiteName}
           blackName={game.blackName}
-          onNewGame={() => mode === 'bot' ? bot.reset() : (local.reset(), resetClock())}
+          onNewGame={() => mode === 'bot' ? (bot.reset(), setBotReady(false)) : (local.reset(), resetClock())}
           onMenu={() => setMode('menu')}
         />
       )}

@@ -41,6 +41,8 @@ chess-ui/
 │   │   ├── LichessPanel/    # Recherche de partie, état connexion
 │   │   ├── GameHistory/     # Tableau des parties sauvegardées
 │   │   ├── GameOverModal/   # Modale fin de partie
+│   │   ├── Navbar/          # Barre de navigation
+│   │   ├── Profile/         # Profil joueur + graphe d'historique Elo
 │   │   ├── Clock/           # Pendule
 │   │   ├── PlayerInfo/      # Nom + elo joueur
 │   │   ├── CapturedPieces/  # Pièces capturées + avantage matériel
@@ -55,7 +57,15 @@ chess-ui/
 │   │   ├── useLichessAuth.ts# OAuth PKCE (login/logout/token)
 │   │   ├── useStockfish.ts  # Web Worker Stockfish (éval temps réel)
 │   │   ├── useGameAnalysis.ts # Analyse complète d'une partie (classification)
-│   │   └── useGameHistory.ts# Persistance localStorage
+│   │   ├── useGameHistory.ts# Persistance localStorage
+│   │   └── useRatingHistory.ts # Historique Elo Lichess
+│   ├── styles/
+│   │   ├── tokens.css       # Variables CSS du projet
+│   │   ├── ds-tokens.css    # Tokens du design system
+│   │   ├── ds-base.css      # Base / reset du design system
+│   │   ├── ds-components.css# Composants du design system
+│   │   ├── compat.css       # Couche de compatibilité DS ↔ existant
+│   │   └── board-themes.css # Thèmes de l'échiquier
 │   ├── types/
 │   │   ├── game.ts          # Player, Color, EndReason
 │   │   ├── mode.ts          # GameMode, BotConfig

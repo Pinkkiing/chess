@@ -97,7 +97,8 @@ export function useLichessGame(token: string | null, myUserId: string | null) {
 
   const resign = useCallback(async () => {
     if (!token || !gameInfo) return;
-    await resignGame(token, gameInfo.id);
+    const ok = await resignGame(token, gameInfo.id);
+    if (!ok) console.warn('Resign request failed');
   }, [token, gameInfo]);
 
   return { gameInfo, gameState, clocks, seeking, setSeeking, sendMove, resign };
